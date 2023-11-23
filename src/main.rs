@@ -1,7 +1,4 @@
-// main.rs
-
 mod properties_interface;
-mod outcomes;
 mod rules;
 mod context;
 
