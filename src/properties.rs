@@ -12,6 +12,7 @@ pub enum Property {
     Allergies(AllergiesType),
     MedicationHistory(PropMedicationHistory),
     MedicalHistory(PropMedicalHistory),
+    AgeGroupDangerous(PropAgeGroupDangerous),
     AgeGroup(PropAgeGroup),
 }
 
@@ -87,6 +88,12 @@ pub enum PropMedicalHistory {
     Diabetes,
     Hypertension,
     None,
+}
+
+#[derive(Debug, Eq, Hash, PartialEq, Clone)]
+pub enum PropAgeGroupDangerous {
+    Yes,
+    No
 }
 
 #[derive(Debug, Eq, Hash, PartialEq, Clone)]

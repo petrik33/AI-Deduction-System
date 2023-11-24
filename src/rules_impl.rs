@@ -1,9 +1,32 @@
-use crate::rules::{Rule, ProdRule, PropertyEqualsCondition, AndCondition, OrCondition};
+use crate::rules::{Rule, ProdRule, PropertyEqualsCondition, AndCondition, OrCondition, Condition};
 use crate::properties::*;
 
 
 pub fn create_rules() -> Vec<Box<dyn Rule>> {
     let mut rules: Vec<Box<dyn Rule>> = Vec::new();
+
+    let age_rule1: Box<dyn Rule> = Box::new(ProdRule {
+        condition: Box::new(PropertyEqualsCondition {
+            value: Property::AgeGroup(PropAgeGroup::Adult)
+        }),
+        outcome: Property::AgeGroupDangerous(PropAgeGroupDangerous::No)
+    });
+
+    rules.push(age_rule1);
+
+    let age_rule2: Box<dyn Rule> = Box::new(ProdRule {
+        condition: Box::new(OrCondition {
+            condition1: Box::new(PropertyEqualsCondition {
+                value: Property::AgeGroup(PropAgeGroup::Child)
+            }),
+            condition2: Box::new(PropertyEqualsCondition {
+                value: Property::AgeGroup(PropAgeGroup::Senior)
+            })
+        }),
+        outcome: Property::AgeGroupDangerous(PropAgeGroupDangerous::No)
+    });
+
+    rules.push(age_rule2);
 
     // Rule 1: If Body Temperature == High, Set Likelihood of Viral Infection to High
     let temp_rule: Box<dyn Rule> = Box::new(ProdRule {
@@ -113,6 +136,47 @@ pub fn create_rules() -> Vec<Box<dyn Rule>> {
     });
 
     rules.push(age_medical_history_rule);
+
+    // Rule 8: If Likelihood of Viral Infection is High OR Likelihood of Allergic Reaction is High,
+    // Set Treatment Recommendation to Doctor Visit
+    let infection_allergic_treatment_condition: Box<dyn Condition> = Box::new(OrCondition {
+        condition1: Box::new(PropertyEqualsCondition {
+            value: Property::LikelihoodOfViralInfection(PropInfectionLikelihood::High),
+        }),
+        condition2: Box::new(AndCondition {
+            condition1: Box::new(PropertyEqualsCondition {
+                value: Property::LikelihoodOfViralInfection(PropInfectionLikelihood::Moderate),
+            }),
+            condition2: Box::new(PropertyEqualsCondition {
+                value: Property::AgeGroupDangerous(PropAgeGroupDangerous::Yes)
+            })
+        }),
+    });
+
+    let treatment_rule: Box<dyn Rule> = Box::new(ProdRule {
+        condition: infection_allergic_treatment_condition,
+        outcome: Property::TreatmentRecommendation(PropTreatmentRecommendation::DoctorVisit),
+    });
+
+    rules.push(treatment_rule);
+
+    // Rule 9: If Likelihood of Viral Infection is Moderate AND Age Group is Adult,
+    // Set Treatment Recommendation to Home Rest
+    let moderate_infection_home_rest_condition: Box<dyn Condition> = Box::new(AndCondition {
+        condition1: Box::new(PropertyEqualsCondition {
+            value: Property::LikelihoodOfViralInfection(PropInfectionLikelihood::Low),
+        }),
+        condition2: Box::new(PropertyEqualsCondition {
+            value: Property::AgeGroupDangerous(PropAgeGroupDangerous::No),
+        }),
+    });
+
+    let treatment_rule_2: Box<dyn Rule> = Box::new(ProdRule {
+        condition: moderate_infection_home_rest_condition,
+        outcome: Property::TreatmentRecommendation(PropTreatmentRecommendation::HomeRest),
+    });
+
+    rules.push(treatment_rule_2);
 
     rules
 }
