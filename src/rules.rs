@@ -4,22 +4,9 @@ pub trait Condition {
     fn evaluate(&self, props: &PropMap) -> bool;
 }
 
-
-pub trait Rule {
-    fn evaluate(&self, props: &mut PropMap);
-}
-
 pub struct ProdRule {
     pub outcome: Property,
     pub condition: Box<dyn Condition>
-}
-
-impl Rule for ProdRule {
-    fn evaluate(&self, props: &mut PropMap) {
-        if self.condition.evaluate(props) {
-            props.replace(self.outcome.clone());
-        }
-    }
 }
 
 
@@ -32,7 +19,6 @@ impl Condition for PropertyEqualsCondition {
         map.get(&self.value).map_or(false, |prop| prop.eq(&self.value))
     }
 }
-
 
 pub struct AndCondition {
     pub condition1: Box<dyn Condition>,

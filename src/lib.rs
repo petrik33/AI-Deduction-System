@@ -5,3 +5,4 @@ pub mod properties_impl;
 pub mod rules;
 pub mod rules_impl;
 pub mod context;
+pub mod solver;
