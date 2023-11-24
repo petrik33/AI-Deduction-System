@@ -1,111 +1,111 @@
-use crate::{properties_interface::Property, properties::*};
+use crate::{properties_interface::Prop, properties::*};
 
 
-impl Property for TreatmentRecommendationType {
-    fn get_name(&self) -> &str {
+impl Prop for PropTreatmentRecommendation {
+    fn get_name() -> &'static str {
         "Treatment"
     }
 
     fn get_description(&self) -> &str {
         match self {
-            TreatmentRecommendationType::DoctorVisit => "Doctor Visit",
-            TreatmentRecommendationType::EmergencyCall => "Emergency Call",
-            TreatmentRecommendationType::HomeRest => "Home Rest",
-            TreatmentRecommendationType::OverTheCounterMedication => "Over the Counter Medication"
+            PropTreatmentRecommendation::DoctorVisit => "Doctor Visit",
+            PropTreatmentRecommendation::EmergencyCall => "Emergency Call",
+            PropTreatmentRecommendation::HomeRest => "Home Rest",
+            PropTreatmentRecommendation::OverTheCounterMedication => "Over the Counter Medication"
         }
     }
 }
 
 
-impl Property for LikelihoodOfViralInfectionType {
-    fn get_name(&self) -> &str {
+impl Prop for PropInfectionLikelihood {
+    fn get_name() -> &'static str {
         "Infection Likelihood"
     }
 
     fn get_description(&self) -> &str {
         match self {
-            LikelihoodOfViralInfectionType::Low => "Low",
-            LikelihoodOfViralInfectionType::Moderate => "Moderate",
-            LikelihoodOfViralInfectionType::High => "High",
+            PropInfectionLikelihood::Low => "Low",
+            PropInfectionLikelihood::Moderate => "Moderate",
+            PropInfectionLikelihood::High => "High",
         }
     }
 }
 
-impl Property for PossibleCausesAbdominalPainType {
-    fn get_name(&self) -> &str {
+impl Prop for PropPossibleCauses {
+    fn get_name() -> &'static str {
         "Possible Causes"
     }
 
     fn get_description(&self) -> &str {
         match self {
-            PossibleCausesAbdominalPainType::Indigestion => "Indigestion",
-            PossibleCausesAbdominalPainType::Gastritis => "Gastritis",
-            PossibleCausesAbdominalPainType::Appendicitis => "Appendicitis",
-            PossibleCausesAbdominalPainType::None => "None",
+            PropPossibleCauses::Indigestion => "Indigestion",
+            PropPossibleCauses::Gastritis => "Gastritis",
+            PropPossibleCauses::Appendicitis => "Appendicitis",
+            PropPossibleCauses::None => "None",
         }
     }
 }
 
-impl Property for BodyTemperatureType {
-    fn get_name(&self) -> &str {
+impl Prop for PropBodyTemperature {
+    fn get_name() -> &'static str {
         "Temperature"
     }
 
     fn get_description(&self) -> &str {
         match self {
-            BodyTemperatureType::High => "High",
-            BodyTemperatureType::Normal => "Normal",
-            BodyTemperatureType::Low => "Low",
+            PropBodyTemperature::High => "High",
+            PropBodyTemperature::Normal => "Normal",
+            PropBodyTemperature::Low => "Low",
         }
     }
 }
 
-impl Property for PainLocationType {
-    fn get_name(&self) -> &str {
+impl Prop for PropPainLocation {
+    fn get_name() -> &'static str {
         "Pain Zone"
     }
 
     fn get_description(&self) -> &str {
         match self {
-            PainLocationType::Head => "Head",
-            PainLocationType::Chest => "Chest",
-            PainLocationType::Abdomen => "Abdomen",
-            PainLocationType::Limbs => "Limbs",
+            PropPainLocation::Head => "Head",
+            PropPainLocation::Chest => "Chest",
+            PropPainLocation::Abdomen => "Abdomen",
+            PropPainLocation::Limbs => "Limbs",
         }
     }
 }
 
-impl Property for SymptomDurationType {
-    fn get_name(&self) -> &str {
+impl Prop for PropSymptomDuration {
+    fn get_name() -> &'static str {
         "Symptom Duration"
     }
 
     fn get_description(&self) -> &str {
         match self {
             // Implement according to your logic
-            SymptomDurationType::ShortTerm => "Short-Term",
-            SymptomDurationType::LongTerm => "Long-Term",
+            PropSymptomDuration::ShortTerm => "Short-Term",
+            PropSymptomDuration::LongTerm => "Long-Term",
         }
     }
 }
 
-impl Property for AssociatedSymptomsType {
-    fn get_name(&self) -> &str {
+impl Prop for PropAssociatedSymptopms {
+    fn get_name() -> &'static str {
         "Associated Symptoms"
     }
 
     fn get_description(&self) -> &str {
         match self {
-            AssociatedSymptomsType::Fever => "Fever",
-            AssociatedSymptomsType::Nausea => "Nausea",
-            AssociatedSymptomsType::Fatigue => "Fatigue",
-            AssociatedSymptomsType::None => "None",
+            PropAssociatedSymptopms::Fever => "Fever",
+            PropAssociatedSymptopms::Nausea => "Nausea",
+            PropAssociatedSymptopms::Fatigue => "Fatigue",
+            PropAssociatedSymptopms::None => "None",
         }
     }
 }
 
-impl Property for AllergiesType {
-    fn get_name(&self) -> &str {
+impl Prop for AllergiesType {
+    fn get_name() -> &'static str {
         "Allergies"
     }
 
@@ -117,43 +117,43 @@ impl Property for AllergiesType {
     }
 }
 
-impl Property for MedicationHistoryType {
-    fn get_name(&self) -> &str {
+impl Prop for PropMedicationHistory {
+    fn get_name() -> &'static str {
         "Medication History"
     }
 
     fn get_description(&self) -> &str {
         match self {
-            MedicationHistoryType::OnMedication => "On Medication",
-            MedicationHistoryType::NotOnMedication => "Not on Medication",
+            PropMedicationHistory::OnMedication => "On Medication",
+            PropMedicationHistory::NotOnMedication => "Not on Medication",
         }
     }
 }
 
-impl Property for MedicalHistoryType {
-    fn get_name(&self) -> &str {
+impl Prop for PropMedicalHistory {
+    fn get_name() -> &'static str {
         "Medical History"
     }
 
     fn get_description(&self) -> &str {
         match self {
-            MedicalHistoryType::Diabetes => "Diabetes",
-            MedicalHistoryType::Hypertension => "Hypertension",
-            MedicalHistoryType::None => "None",
+            PropMedicalHistory::Diabetes => "Diabetes",
+            PropMedicalHistory::Hypertension => "Hypertension",
+            PropMedicalHistory::None => "None",
         }
     }
 }
 
-impl Property for AgeGroupType {
-    fn get_name(&self) -> &str {
+impl Prop for PropAgeGroup {
+    fn get_name() -> &'static str {
         "Age Group"
     }
 
     fn get_description(&self) -> &str {
         match self {
-            AgeGroupType::Child => "Child",
-            AgeGroupType::Adult => "Adult",
-            AgeGroupType::Senior => "Senior",
+            PropAgeGroup::Child => "Child",
+            PropAgeGroup::Adult => "Adult",
+            PropAgeGroup::Senior => "Senior",
         }
     }
 }

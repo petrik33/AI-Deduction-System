@@ -1,5 +1,4 @@
-pub trait Property {
-    fn get_name(&self) -> &str;
+pub trait Prop {
+    fn get_name() -> &'static str;
     fn get_description(&self) -> &str;
-    // fn get_value(&self) -> &T;
 }

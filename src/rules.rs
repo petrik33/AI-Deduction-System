@@ -1,42 +1,42 @@
-use std::collections::HashSet;
-use crate::properties::HealthProperty;
-use crate::properties_interface::Property;
-
-
-type PropMap = HashSet<HealthProperty>;
+use crate::properties::{Property, PropMap};
 
 pub trait Condition {
     fn evaluate(&self, props: &PropMap) -> bool;
 }
 
 
-pub struct Rule {
-    condition: ConditionType,
-    outcome: dyn Property,
+pub trait Rule {
+    fn evaluate(&self, props: &mut PropMap);
 }
 
+pub struct ProdRule {
+    pub outcome: Property,
+    pub condition: Box<dyn Condition>
+}
 
-pub enum ConditionType {
-    Equals(Box<PropertyEqualsCondition>),
-    And(AndCondition),
-    Or(OrCondition)
+impl Rule for ProdRule {
+    fn evaluate(&self, props: &mut PropMap) {
+        if self.condition.evaluate(props) {
+            props.replace(self.outcome.clone());
+        }
+    }
 }
 
 
 pub struct PropertyEqualsCondition {
-    value: HealthProperty
+    pub value: Property,
 }
 
 impl Condition for PropertyEqualsCondition {
     fn evaluate(&self, map: &PropMap) -> bool {
-        map.contains(&self.value)
+        map.get(&self.value).map_or(false, |prop| prop.eq(&self.value))
     }
 }
 
 
 pub struct AndCondition {
-    condition1: Box<dyn Condition>,
-    condition2: Box<dyn Condition>,
+    pub condition1: Box<dyn Condition>,
+    pub condition2: Box<dyn Condition>,
 }
 
 impl Condition for AndCondition {
@@ -47,8 +47,8 @@ impl Condition for AndCondition {
 
 
 pub struct OrCondition {
-    condition1: Box<dyn Condition>,
-    condition2: Box<dyn Condition>,
+    pub condition1: Box<dyn Condition>,
+    pub condition2: Box<dyn Condition>,
 }
 
 impl Condition for OrCondition {
