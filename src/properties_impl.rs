@@ -158,3 +158,17 @@ impl Prop for PropAgeGroup {
     }
 }
 
+
+impl Prop for PropAgeGroupDangerous {
+    fn get_name() -> &'static str {
+        "Risk Group"
+    }
+
+    fn get_description(&self) -> &str {
+        match self {
+            Self::Yes => "Dangerous",
+            Self::No => "Safe"
+        }
+    }
+}
+
